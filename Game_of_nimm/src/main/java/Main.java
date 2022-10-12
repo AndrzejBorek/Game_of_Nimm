@@ -1,9 +1,8 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         Player p1 = new Player("Player 1");
         Player p2 = new Player("Player 2");

@@ -47,18 +47,26 @@ public class Game {
         return this.getSizeOfPiles().stream().allMatch(n -> n == 0);
     }
 
-    public boolean move(Player player) throws IOException, IndexOutOfBoundsException {
+    public boolean move(Player player) {
         try {
             var move = player.makeMove();
             return this.piles.get(move[0]).takeStones(move[1]);
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
-            System.out.println("You can't take from unexisting pile!");
+            System.out.println("You can't take from pile that does not exist!");
+            return false;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            System.out.println("Wrong Input");
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Something went wrong while trying to read your answer");
             return false;
         }
     }
 
-    public void play() throws IOException {
+    public void play() {
 
         while (!this.checkIfPilesAreEmpty()) {
             if (this.players.get(0).isMyTurn()) {

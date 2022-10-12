@@ -22,7 +22,7 @@ public class Player {
         isMyTurn = true;
     }
 
-    public int[] makeMove() throws IOException {
+    public int[] makeMove() throws IOException, IndexOutOfBoundsException, NumberFormatException {
         int[] result = new int[2];
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(System.in));
