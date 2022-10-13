@@ -12,6 +12,5 @@ public class Main {
         Random r = new Random();
         Game game = new Game(players, r.nextInt(5, 20), r.nextInt(5, 20), r.nextInt(5, 20));
         game.play();
-
     }
 }

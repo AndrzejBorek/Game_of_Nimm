@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Game {
@@ -54,35 +55,48 @@ public class Game {
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
             System.out.println("You can't take from pile that does not exist!");
-            return false;
         } catch (NumberFormatException e) {
             e.printStackTrace();
             System.out.println("Wrong Input");
-            return false;
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Something went wrong while trying to read your answer");
-            return false;
         }
+        return false;
+    }
+
+    private void writeWinner(Player winner) {
+        System.out.println(winner.getName() + " won");
     }
 
     public void play() {
-
+        Random r = new Random();
+        Player player1 = this.getPlayers().get(0);
+        Player player2 = this.getPlayers().get(1);
+        int randomPlayerStart = r.nextInt(2);
+        this.players.get(randomPlayerStart).setMyTurn();
         while (!this.checkIfPilesAreEmpty()) {
-            if (this.players.get(0).isMyTurn()) {
-                System.out.println("We have " + this.getSizeOfPiles() + " stones left");
-                System.out.println("Its " + players.get(0).getName() + " turn");
-                if (this.move(this.players.get(0))) this.players.get(1).setMyTurn();
-            } else {
-                System.out.println("We have " + this.getSizeOfPiles() + " stones left");
-                System.out.println("Its " + players.get(1).getName() + " turn");
-                if (this.move(this.players.get(1))) this.players.get(0).setMyTurn();
+            System.out.println("We have " + this.getSizeOfPiles() + " stones left");
+            if (player1.isMyTurn()) {
+                System.out.println("Its " + player1.getName() + " turn");
+                if (this.move(player1)) {
+                    player2.setMyTurn();
+                } else {
+                    player1.setMyTurn();
+                }
+            } else if (player2.isMyTurn()) {
+                System.out.println("Its " + player2.getName() + " turn");
+                if (this.move(player2)) {
+                    player1.setMyTurn();
+                } else {
+                    player2.setMyTurn();
+                }
             }
         }
-        if (this.players.get(0).isMyTurn()) {
-            System.out.println("Player " + this.getPlayers().get(1).getName() + " won");
+        if (player1.isMyTurn()) {
+            this.writeWinner(player2);
         } else {
-            System.out.println("Player " + this.getPlayers().get(0).getName() + " won");
+            this.writeWinner(player1);
         }
     }
 }
